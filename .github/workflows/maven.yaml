@@ -1,13 +1,11 @@
 #this will build a java project with maven
 name: Java CI with Maven in Linux
-
 on:
   push:
   pull_request:
 jobs:
   build:
-    runs-on: ubuntu-latest
-		
+    runs-on: ubuntu-latest		
 	steps:
 	- uses: actions/checkout@v2
 	- name: Set up JDK 21
