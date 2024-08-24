@@ -17,7 +17,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: $HOME/.m2
-        key: ${{runner.os}}-m2-${{hashFiles('**/pom.xml')}}
+        key: ${{runner.os}}-m2-${{hashFiles('**/pom.xml', '**/*.yaml')}}
         restore-keys: ${{runner.os}}-m2-
     - name: Build with Maven
       run: mvn clean verify
