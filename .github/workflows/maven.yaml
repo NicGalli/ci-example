@@ -13,5 +13,11 @@ jobs:
       with:
         java-version: 21
         distribution: corretto
+    - name: Cache m2 folder
+      uses: actions/cache@v2
+      with:
+        path: $HOME/.m2
+        key: ${{runner.os}}-m2-${{hashFiles('**/pom.xml')}}
+        restore-keys: ${{runner.os}}-m2-
     - name: Build with Maven
       run: mvn clean verify
