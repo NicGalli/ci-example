@@ -24,7 +24,7 @@ jobs:
         key: ${{runner.os}}-m2-${{hashFiles('**/pom.xml', '**/*.yaml')}}
         restore-keys: ${{runner.os}}-m2-
     - name: Build with Maven
-      run: mvn clean verify sure surefire-report:report-only site:site -DgenerateReports=false
+      run: mvn clean verify surefire-report:report-only site:site -DgenerateReports=false
     - name: Archive Junit Report
       uses: actions/upload-artifact@v2
       with:
