@@ -3,12 +3,19 @@ name: Java CI with Maven
 on:
   push:
   pull_request:
+
 jobs:
   build:
     runs-on: ${{matrix.os}}	
+
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            additional-maven-args: "-Pjacoco"
+          - os: macos-latest
+          - os: windows-latest
+
     name: Build with Java on ${{matrix.os}}
     steps:
     - uses: actions/checkout@v4
@@ -24,7 +31,10 @@ jobs:
         key: ${{runner.os}}-m2-${{hashFiles('**/pom.xml', '**/*.yaml')}}
         restore-keys: ${{runner.os}}-m2-
     - name: Build with Maven
-      run: mvn clean verify surefire-report:report-only site:site -DgenerateReports=false
+      run: >
+        mvn clean verify 
+        ${{matrix.additional-maven-args}} 
+        surefire-report:report-only site:site -DgenerateReports=false
     - name: Archive Junit Report
       uses: actions/upload-artifact@v4
       with:
