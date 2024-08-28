@@ -13,6 +13,7 @@ jobs:
         include:
           - os: ubuntu-latest
             additional-maven-args: "-Pjacoco"
+            jacoco-is-used: "-jacoco"
           - os: macos-latest
           - os: windows-latest
 
@@ -38,5 +39,5 @@ jobs:
     - name: Archive Junit Report
       uses: actions/upload-artifact@v4
       with:
-        name: surefire-report-${{runner.os}}
+        name: surefire-report-${{runner.os}}${{matrix.jacoco-is-used}}
         path: '**/target/site'
