@@ -1,3 +1,4 @@
 # ci-example
 ci test.
-project
+project.
+now with coveralls
