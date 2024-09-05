@@ -12,10 +12,10 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            additional-maven-args: "-Pjacoco -DrepoToken=$COVERALLS_REPO_TOKEN coveralls:report"
+            additional-maven-args: "-Pjacoco -Pdocker -DrepoToken=$COVERALLS_REPO_TOKEN coveralls:report"
             jacoco-is-used: "-jacoco"
-          - os: macos-latest
-          - os: windows-latest
+          #- os: macos-latest
+          #- os: windows-latest
 
     name: Build with Java on ${{matrix.os}}
     steps:
