@@ -1,20 +1,14 @@
 #this will build a java project with maven
 name: Java CI with Maven on mac
 on:
-#  push:
+  push:
   pull_request:
 
 jobs:
   build:
-    runs-on: ${{matrix.os}}	
+    runs-on: macos-latest
 
-    strategy:
-      matrix:
-        include:
-          - os: macos-latest
-            additional-maven-args: "-Pdocker"
-
-    name: Build with Java on ${{matrix.os}}
+    name: Build with Java on macos-latest
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 21
@@ -28,12 +22,11 @@ jobs:
       uses: actions/cache@v4
       with:
         path: ~/.m2
-        key: ${{runner.os}}-m2-${{hashFiles('**/pom.xml', '**/*.yaml')}}
-        restore-keys: ${{runner.os}}-m2-
+        key: macos-latest-m2-${{hashFiles('**/pom.xml', '**/*.yaml')}}
+        restore-keys: macos-latest-m2-
     - name: Build with Maven
       run: >
-        mvn clean verify 
-        ${{matrix.additional-maven-args}} 
+        mvn clean verify -Pdocker
         surefire-report:report-only site:site -DgenerateReports=false
     - name: Archive Junit Report
       uses: actions/upload-artifact@v4

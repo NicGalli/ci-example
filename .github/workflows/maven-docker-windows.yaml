@@ -1,14 +1,14 @@
 #this will build a java project with maven
 name: Java CI with Maven on windows
 on:
-  push:
-  pull_request:
+  #push:
+  #pull_request:
 
 jobs:
   build:
     runs-on: ${{matrix.os}}	
-  #  env:
-     # DOCKER_HOST: tcp://localhost:2375
+    env:
+      DOCKER_HOST: tcp://localhost:2375
 
     strategy:
       matrix:
