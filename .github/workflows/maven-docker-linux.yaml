@@ -1,5 +1,5 @@
 #this will build a java project with maven
-name: Java CI with Maven
+name: Java CI with Maven on linux
 on:
   push:
   pull_request:
