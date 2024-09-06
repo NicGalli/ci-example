@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     runs-on: ${{matrix.os}}	
-    env:
+  #  env:
      # DOCKER_HOST: tcp://localhost:2375
 
     strategy:
