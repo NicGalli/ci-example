@@ -1,22 +1,16 @@
 #this will build a java project with maven
 name: Java CI with Maven on windows
 on:
-  #push:
+  push:
   #pull_request:
 
 jobs:
   build:
-    runs-on: ${{matrix.os}}	
+    runs-on: windows-latest
     env:
       DOCKER_HOST: tcp://localhost:2375
 
-    strategy:
-      matrix:
-        include:
-          - os: windows-latest
-            additional-maven-args: "-Pdocker"
-
-    name: Build with Java on ${{matrix.os}}
+    name: Build with Java on windows
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 21
@@ -24,28 +18,28 @@ jobs:
       with:
         java-version: 21
         distribution: corretto
-  #  - name: Docker config
-   #   run: >
-    #    sc config docker
-     #   binpath="dockerd.exe --run-service -H tcp://localhost:2375"
-#    - name: Docker restart
- #     run: restart-service *docker*
-  #  - name: Docker info
-   #   run: docker info
+    - name: Docker config
+      run: >
+        sc config docker
+        binpath="dockerd.exe --run-service -H tcp://localhost:2375"
+    - name: Docker restart
+      run: restart-service *docker*
+    - name: Docker info
+      run: docker info
     - name: Cache m2 folder
       uses: actions/cache@v4
       with:
         path: ~/.m2
-        key: ${{runner.os}}-m2-${{hashFiles('**/pom.xml', '**/*.yaml')}}
-        restore-keys: ${{runner.os}}-m2-
+        key: windows-latest-m2-${{hashFiles('**/pom.xml', '**/*.yaml')}}
+        restore-keys: windows-latest-m2-
     - name: Build with Maven
       run: >
         mvn clean verify 
-        ${{matrix.additional-maven-args}} 
+        -Pdocker
         surefire-report:report-only site:site -DgenerateReports=false 
  #     working-directory: com.examples.hellodocker
     - name: Archive Junit Report
       uses: actions/upload-artifact@v4
       with:
-        name: surefire-report-${{runner.os}}
+        name: surefire-report-windows-latest
         path: '**/target/site'
