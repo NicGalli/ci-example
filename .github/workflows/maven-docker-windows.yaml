@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: windows-latest
+          - os: windows-2019
             additional-maven-args: "-Pdocker"
 
     name: Build with Java on ${{matrix.os}}
